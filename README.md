@@ -59,52 +59,6 @@ Shows clearly how two survivors combine forces for safety and strength:
 
 ---
 
-## Project Structure
-
-```
-Aawaz/
-├── client/                     # Frontend Application (React + Vite + TypeScript)
-│   ├── public/                 # Static assets (icons, manifest)
-│   ├── src/
-│   │   ├── components/         # All user interface screens and widgets
-│   │   │   ├── Dashboard.tsx            # Main vault overview & account manager modal
-│   │   │   ├── ReportBuilder.tsx        # 5-step guided incident form with voice input
-│   │   │   ├── MatchesHub.tsx           # Two-party consent ladder & joint complaint pact
-│   │   │   ├── PatternRadarVisualizer.tsx # Animated sonar radar with audio alert
-│   │   │   ├── ReviewerConsole.tsx      # Committee reviewer portal with PIN access
-│   │   │   ├── RightsExplainer.tsx      # POSH Act legal guide & helpline directory
-│   │   │   ├── DisguiseOverlay.tsx      # Study Notes cover screen (PIN: 2026)
-│   │   │   └── Navbar.tsx               # Top navigation with instant Quick Exit
-│   │   ├── context/
-│   │   │   └── AppContext.tsx           # Global state, multi-vault storage & matching logic
-│   │   ├── utils/
-│   │   │   ├── crypto.ts                # Client-side AES-256-GCM encryption & PBKDF2 keys
-│   │   │   ├── hasher.ts                # HMAC-SHA256 & Metaphone sound matching
-│   │   │   ├── aiStructuring.ts         # Automated chronological event timeline parser
-│   │   │   ├── pdfGenerator.ts          # jsPDF formal complaint document generator
-│   │   │   └── translations.ts          # Multilingual text support
-│   │   ├── types/
-│   │   │   └── index.ts                 # TypeScript data contracts (Reports, Vaults, Matches)
-│   │   ├── App.tsx                      # Main application view router
-│   │   ├── main.tsx                     # React root entry point
-│   │   └── index.css                    # Tailwind CSS custom themes & animations
-│   ├── package.json            # Client dependencies and build scripts
-│   └── vite.config.ts          # Vite bundler configuration
-│
-└── server/                     # Backend Matching Service (FastAPI / Python)
-    ├── main.py                 # FastAPI matching server endpoints
-    ├── requirements.txt         # Python dependencies
-    └── test_matching.py        # Automated test suite for phonetic token matching
-```
-
-### What Each Folder is About:
-- **client/src/components/**: Contains all interactive user-facing screens: the private incident builder, the match radar, the two-party consent ladder, the committee review portal, and the Study Notes disguise.
-- **client/src/context/**: Manages the local application state (`AppContext.tsx`), handling multi-user account switching, client-side encrypted vault storage, and instant peer match simulations.
-- **client/src/utils/**: Core security and utility functions including browser Web Crypto encryption (AES-256-GCM), sound-based phonetic matching (Metaphone), AI event structuring, and official PDF generation.
-- **client/src/types/**: Strict TypeScript interfaces defining the shapes of incident reports, match records, consent levels, and user accounts.
-- **server/**: A lightweight Python / FastAPI backend microservice demonstrating server-side blind HMAC matching and phonetic token indexing for enterprise deployments.
-
----
 
 ## Tech Stack
 
