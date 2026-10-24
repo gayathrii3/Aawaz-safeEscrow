@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-rose-50/40 text-slate-800 antialiased min-h-screen font-sans;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(254, 205, 214, 0.25) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(243, 237, 250, 0.35) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(253, 244, 220, 0.2) 0px, transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(254, 205, 214, 0.5);
+  box-shadow: 0 10px 30px -5px rgba(225, 29, 77, 0.05), 0 4px 12px -2px rgba(131, 24, 67, 0.03);
+}
+
+.glass-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 63, 104, 0.4);
+  box-shadow: 0 16px 36px -6px rgba(225, 29, 77, 0.09);
+}
+
+.glow-rose {
+  box-shadow: 0 0 25px rgba(244, 63, 104, 0.2);
+}
+
+.glow-lavender {
+  box-shadow: 0 0 25px rgba(165, 110, 214, 0.2);
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 245, 246, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(244, 114, 142, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(225, 29, 77, 0.5);
+}
+
+/* Echo Wave and Pop Animations for Aawaz Logo */
+@keyframes echo-wave {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pop-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+.animate-echo-wave {
+  animation: echo-wave 2.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.animate-pop-subtle {
+  animation: pop-bounce 3.2s ease-in-out infinite;
+}
+
+/* Live Pattern Match Radar Animations */
+@keyframes radar-sweep {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes radar-ping-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+@keyframes blip-glow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px 2px rgba(244, 63, 94, 0.6);
+  }
+  50% {
+    transform: scale(1.25);
+    box-shadow: 0 0 22px 6px rgba(244, 63, 94, 0.95);
+  }
+}
+
+@keyframes signal-flow {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 4s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-radar-sweep-fast {
+  animation: radar-sweep 1.2s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-radar-ping {
+  animation: radar-ping-ring 2.8s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.animate-blip-glow {
+  animation: blip-glow 1.8s ease-in-out infinite;
+}
+
+.animate-signal-flow {
+  animation: signal-flow 1s linear infinite;
+}
+
