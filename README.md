@@ -1,26 +1,20 @@
 # Aawaz: Safe Reporting and Evidence Vault
 
 > **Private Harassment Reporting That Links Repeat Offenders**  
-> *"Harassment isn't a one-off. It's a pattern that silence hides. Aawaz lets survivors speak without going first."*
-
----
-
-## Overview
-
-Harassment is rarely a one-time event; it is usually a pattern hidden by silence. Many people hesitate to report alone out of fear of retaliation, disbelief, or "he said, she said" dismissals.
+> Harassment is rarely a one-time event; it is usually a pattern hidden by silence. Many people hesitate to report alone out of fear of retaliation, disbelief, or "he said, she said" dismissals.
 
 **Aawaz** solves this by letting survivors speak without having to go first:
 
-- **Private & Sealed**: Your report is encrypted directly on your device. No one can read your story.
-- **Smart Matching**: The system quietly checks if anyone else reported the same person at your organization.
-- **You Are Not Alone**: When an independent match is found, both people are privately alerted.
-- **Mutual Control**: You both decide what to do next—from simply knowing a match exists, to comparing timelines, to filing an official joint complaint together.
+>- **Private & Sealed**: Your report is encrypted directly on your device. No one can read your story.
+>- **Smart Matching**: The system quietly checks if anyone else reported the same person at your organization.
+>- **You Are Not Alone**: When an independent match is found, both people are privately alerted.
+>- **Mutual Control**: You both decide what to do next—from simply knowing a match exists, to comparing timelines, to filing an official joint complaint together.
+
 
 ---
 
 ## Safety & Disguise
 
-- **Study Notes Disguise**: A discreet student revision screen (**"Computer Science & Data Structures Notes"**) that can be opened anytime to hide what you are doing.
 - **Quick Exit**: A persistent one-click button in the navigation bar that immediately switches to the Notes disguise and clears sensitive screen data, with an emergency leave button to Google.
 - **No Personal Details Required**: No phone number, email address, or real name needed. Your account is protected by an anonymous pseudonym and a private 12-word recovery phrase.
 
