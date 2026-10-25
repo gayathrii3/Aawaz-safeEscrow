@@ -30,21 +30,39 @@ Workplace sexual harassment is rarely an isolated incident; it is usually an ong
 ## System Workflow Diagram
 
 ```mermaid
-flowchart TD
-    A[User creates report] --> B[Incident Builder: 5 steps]
-    B --> C[Phonetic key & HMAC token derived]
-    C --> D{Escalation Route}
-    D -->|Pattern Matching Route| E[Vault Store / Match Radar]
-    D -->|Direct Filing Route| F[Direct Complaint Inbox in IC Console]
-    E --> G[2nd User reports same person]
-    G --> H[Step 1: Pattern Found - mutual notification]
-    H --> I[Step 2: Mutual Timeline Request & Agreement]
-    I --> J[Step 3: Joint Legal Complaint Unlocked]
-    J --> K[Download PDF]
-    J --> L[Send Joint Report to IC Console]
-    F --> M[IC Presiding Officer Terminal]
-    L --> M
-    M --> N[Audit Trail Logged + Statutory Inquiry]
+flowchart LR
+    subgraph Intake["1. Documentation"]
+        direction TB
+        A[Survivor Documents Incident] --> B[5-Step Incident Builder]
+        B --> C[Phonetic Sound Key and Blind HMAC]
+    end
+
+    subgraph Routing["2. Routing"]
+        direction TB
+        C --> D{Escalation Route}
+    end
+
+    subgraph DirectRoute["Direct Channel"]
+        direction TB
+        D -->|Immediate Filing| F[Direct Complaint Inbox]
+    end
+
+    subgraph MatchingRoute["3. Mutual Consent Ladder"]
+        direction TB
+        D -->|Pattern Match Route| E[Match Radar Scanning]
+        E --> G[2nd Independent Report Filed]
+        G --> H["Step 1: Pattern Found (Zero narrative shared)"]
+        H --> I["Step 2: Mutual Consent (Timelines unlocked)"]
+        I --> J["Step 3: Joint Legal Complaint (Joint PDF and send)"]
+    end
+
+    subgraph IC["4. Internal Committee Review"]
+        direction TB
+        F --> M[IC Reviewer Console]
+        J -->|Joint PDF or Push| M
+        M --> N[Evidence Verification]
+        N --> O[Section 12 Interim Relief and Inquiry]
+    end
 ```
 
 ---
