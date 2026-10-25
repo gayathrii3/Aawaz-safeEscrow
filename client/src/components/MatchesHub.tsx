@@ -1,7 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import { generateComplaintPdf } from '../utils/pdfGenerator';
-import { PatternRadarVisualizer } from './PatternRadarVisualizer';
 import {
   Lock,
   FileDown,
@@ -35,11 +34,7 @@ export const MatchesHub: React.FC = () => {
   if (!activeMatch) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <PatternRadarVisualizer
-          matchesCount={0}
-          primaryPseudonym={currentUser.pseudonym}
-        />
-        <div className="glass-card rounded-3xl p-8 text-center space-y-4 max-w-xl mx-auto border border-rose-200/70 shadow-soft mt-8">
+        <div className="glass-card rounded-3xl p-8 text-center space-y-4 max-w-xl mx-auto border border-rose-200/70 shadow-soft">
           <div className="w-14 h-14 rounded-full bg-rose-100/80 text-rose-600 flex items-center justify-center mx-auto">
             <Lock className="w-6 h-6" />
           </div>
@@ -100,13 +95,6 @@ export const MatchesHub: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
-      <PatternRadarVisualizer
-        matchesCount={matches.length}
-        primaryPseudonym={currentUser.pseudonym}
-        peerPseudonym={peerName}
-        accusedOrg={primaryReport?.accusedOrg || 'Your Organization'}
-      />
-
       <div className="glass-card rounded-3xl p-6 sm:p-8 shadow-soft space-y-6">
 
         {/* Header */}
