@@ -1,5 +1,13 @@
 export type ConsentScope = 'none' | 'existence_only' | 'timeline' | 'full';
 
+export interface DirectComplaint {
+  id: string;
+  reportId: string;
+  complainantPseudonym: string;
+  submittedAt: string;
+  status: 'pending' | 'acknowledged' | 'dismissed';
+}
+
 export interface UserAccount {
   id: string;
   pseudonym: string;
@@ -32,6 +40,8 @@ export interface ReportDraft {
     fileSize: number;
     fileHash: string;
     uploadedAt: string;
+    fileType: 'image' | 'audio' | 'video' | 'other';
+    dataUrl?: string;   // base64 data URL — present for images; omitted for large files
   }[];
   createdAt: string;
   matchToken?: string;
@@ -44,11 +54,18 @@ export interface MatchRecord {
   id: string;
   reportId: string;
   matchedReportId?: string;
+  pairedMatchId?: string;       // ID of the peer's corresponding MatchRecord
+  peerUserId?: string;          // ID of the peer UserAccount
   peerUserPseudonym?: string;
   peerRole?: string;
   confidence: 'high' | 'possible';
   myConsent: ConsentScope;
   peerConsent: ConsentScope;
+  // Request tracking: has each side asked to proceed to the next step?
+  myStep2Requested?: boolean;
+  peerStep2Requested?: boolean;
+  myStep3Requested?: boolean;
+  peerStep3Requested?: boolean;
   createdAt: string;
   timelineSharedWithMe?: StructuredEvent[];
 }

@@ -38,7 +38,7 @@ export const ReportBuilder: React.FC = () => {
   const [accusedRole, setAccusedRole] = useState('');
   const [structuredEvents, setStructuredEvents] = useState<StructuredEvent[]>([]);
   const [summary, setSummary] = useState('');
-  const [evidenceFiles, setEvidenceFiles] = useState<{ id: string; fileName: string; fileSize: number; fileHash: string; uploadedAt: string }[]>([]);
+  const [evidenceFiles, setEvidenceFiles] = useState<{ id: string; fileName: string; fileSize: number; fileHash: string; uploadedAt: string; fileType: 'image' | 'audio' | 'video' | 'other'; dataUrl?: string }[]>([]);
   
   // Real-time token preview
   const [liveToken, setLiveToken] = useState('');
@@ -95,6 +95,23 @@ export const ReportBuilder: React.FC = () => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const hash = await computeSha256(file.name + file.size + Date.now());
+
+      // Determine file type category
+      const mime = file.type;
+      const fileType: 'image' | 'audio' | 'video' | 'other' =
+        mime.startsWith('image/') ? 'image' :
+        mime.startsWith('audio/') ? 'audio' :
+        mime.startsWith('video/') ? 'video' : 'other';
+
+      // Read actual file data as base64 data URL (for images and small files)
+      const dataUrl = await new Promise<string | undefined>((resolve) => {
+        // Store data URL for images; for audio/video store it too so reviewer can play
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => resolve(undefined);
+        reader.readAsDataURL(file);
+      });
+
       setEvidenceFiles(prev => [
         ...prev,
         {
@@ -102,7 +119,9 @@ export const ReportBuilder: React.FC = () => {
           fileName: file.name,
           fileSize: file.size,
           fileHash: hash,
-          uploadedAt: new Date().toISOString()
+          uploadedAt: new Date().toISOString(),
+          fileType,
+          dataUrl,
         }
       ]);
     }

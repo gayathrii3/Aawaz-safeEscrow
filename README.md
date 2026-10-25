@@ -1,89 +1,196 @@
 # Aawaz: Safe Reporting and Evidence Vault
 
 > **Private Harassment Reporting That Links Repeat Offenders**  
-> Harassment is rarely a one-time event; it is usually a pattern hidden by silence. Many people hesitate to report alone out of fear of retaliation, disbelief, or "he said, she said" dismissals.
-
-**Aawaz** solves this by letting survivors speak without having to go first:
-
->- **Private & Sealed**: Your report is encrypted directly on your device. No one can read your story.
->- **Smart Matching**: The system quietly checks if anyone else reported the same person at your organization.
->- **You Are Not Alone**: When an independent match is found, both people are privately alerted.
->- **Mutual Control**: You both decide what to do next—from simply knowing a match exists, to comparing timelines, to filing an official joint complaint together.
-
+> *"You are heard. You are not alone."*
 
 ---
 
-## Safety & Disguise
+## Overview
 
-- **Quick Exit**: A persistent one-click button in the navigation bar that immediately switches to the Notes disguise and clears sensitive screen data, with an emergency leave button to Google.
-- **No Personal Details Required**: No phone number, email address, or real name needed. Your account is protected by an anonymous pseudonym and a private 12-word recovery phrase.
+Workplace sexual harassment is rarely an isolated incident; it is usually an ongoing pattern protected by silence, power asymmetry, and fear of single retaliation. Many survivors hesitate to report out of concern for professional fallout, disbelief, or "he said, she said" dismissals.
 
----
+**Aawaz** provides a privacy-first sanctuary designed under the **POSH Act 2013** and **DPDPA 2023**:
 
-## Core Features
-
-### 1. Dynamic Anonymous Vaults
-- Create fresh anonymous accounts with private recovery phrases anytime.
-- Switch between different vaults to easily test and demonstrate multi-user reporting without fixed or hardcoded profiles.
-
-### 2. Guided 5-Step Incident Builder
-- **Step 1: Incident Story** — Type freely or record using built-in voice dictation.
-- **Step 2: AI Timeline** — Structures free-form text into clear, chronological events with behavior tags.
-- **Step 3: Person Details** — Enter the person and workplace for private sound-based matching.
-- **Step 4: Evidence Locker** — Attach files with cryptographic integrity hashes.
-- **Step 5: Seal & Encrypt** — Sealed client-side with AES-256-GCM encryption before saving.
-
-### 3. Private Match Radar
-- Real-time animated radar that scans for matching reports.
-- Smart sound-based matching that catches misspelled or differently-formatted names.
-- Instant visual and audio notification when another person reports the same individual.
-
-### 4. Two-Party Mutual Consent Ladder
-Information only reveals when **both people agree** to that step:
-- **Step 1: Know Someone Else Reported** — Confirms a match without revealing names, dates, or stories.
-- **Step 2: Share Incident Timelines** — Unlocks dates and events when both agree, proving repeated behavior.
-- **Step 3: File Complaint Together** — Unlocks the joint filing agreement when both accounts sign.
-- **Peer Response Simulator** — Interactive controls (`Step 1`, `Step 2`, `Step 3`) to test how mutual consent works in real time.
-
-### 5. Joint Complaint Agreement
-Shows clearly how two survivors combine forces for safety and strength:
-- **Combined Proof**: Merges both timelines into one case, eliminating "he said, she said" dismissals.
-- **Safety at Work**: Jointly asks for immediate protection (moving the accused person away during inquiry).
-- **Strict Privacy**: Mutual non-disclosure agreement to protect both identities.
-- **Digital Signatures**: Confirmed and signed with both anonymous vault keys.
-- **Combined Timeline**: Displays both reports chronologically to show repeated patterns over time.
-
-### 6. Official Complaint PDF & Committee Reviewer Portal
-- **Download Stamped PDF**: Generates a structured formal complaint document ready for committee submission.
-- **Committee Reviewer Portal**: An administrative view for committee members to review incoming joint cases and immutable audit logs.
+- **Client-Side Zero-Knowledge Encryption**: Reports and uploaded exhibits are encrypted directly in the browser. Unconsented narratives and personal identities never leak.
+- **Dynamic Blind Cryptographic Matching**: Reports are indexed using Keyed HMAC-SHA256 and phonetic normalization (Metaphone/Soundex) to pair independent complaints without exposing plaintext names.
+- **Two-Party Consent Ladder**: When two independent individuals report the same respondent, neither identity or narrative is revealed until both mutually consent to advance through progressive verification stages.
+- **Direct & Joint Escalation**: Survivors can jointly compile a tamper-evident complaint or file directly to their organization's Internal Grievance Committee (IGC / IC).
 
 ---
 
+## Safety & Privacy Architecture
 
-## Tech Stack
+- **Study Notes Disguise**: A discreet cover view masquerading as student notes (*"Computer Science & Data Structures Notes"*) accessible instantly via PIN lock.
+- **Instant Quick Exit**: A persistent escape button in the top navigation bar that immediately masks the screen and switches to Google.
+- **No PII Credentials Required**: No email address, phone number, or login credentials needed. Accounts are generated as anonymous vault IDs (e.g., `Velvet-Harbor-804`).
+- **One-Click Vault Restoration**: Quickly restore or switch between local vault accounts without complex recovery phrases.
 
-- **Frontend**: React 18, Vite, TypeScript, Tailwind CSS
-- **Security & Cryptography**: Native Web Crypto API (AES-256-GCM, PBKDF2, HMAC-SHA256)
-- **Matching Algorithms**: Metaphone & Soundex phonetic algorithms
-- **Document Export**: jsPDF + html2canvas
-- **Icons**: Lucide React
+---
+
+## System Workflow Diagram
+
+```mermaid
+flowchart TD
+    A[User creates report] --> B[Incident Builder: 5 steps]
+    B --> C[Phonetic key & HMAC token derived]
+    C --> D{Escalation Route}
+    D -->|Pattern Matching Route| E[Vault Store / Match Radar]
+    D -->|Direct Filing Route| F[Direct Complaint Inbox in IC Console]
+    E --> G[2nd User reports same person]
+    G --> H[Step 1: Pattern Found - mutual notification]
+    H --> I[Step 2: Mutual Timeline Request & Agreement]
+    I --> J[Step 3: Joint Legal Complaint Unlocked]
+    J --> K[Download PDF]
+    J --> L[Send Joint Report to IC Console]
+    F --> M[IC Presiding Officer Terminal]
+    L --> M
+    M --> N[Audit Trail Logged + Statutory Inquiry]
+```
+
+---
+
+## Core Features & Workflow
+
+### 1. Guided 5-Step Incident Builder
+- **Step 1: Narrative Recording** — Express what happened via text or simulated voice transcription.
+- **Step 2: AI Chronology Structuring** — Converts free-form narratives into structured events with dates, locations, witnesses, and behavior tags.
+- **Step 3: Respondent Indexing** — Enter the accused individual's name and organisation to generate real-time phonetic sound keys and blind HMAC match tokens.
+- **Step 4: Evidence Locker with Visual & Audio Support** — Attach screenshots, documents, audio recordings, or video clips. Images are embedded visually in official complaints, and multimedia files are SHA-256 fingerprinted.
+- **Step 5: Client-Side Seal** — Final review and client-side sealing.
+
+### 2. Two-Sided Step-by-Step Escalation Hub
+Information unlocks only when **both individuals mutually consent**:
+- **Step 1: Pattern Discovery** — Notifies both parties that another independent filing exists regarding the same respondent without sharing names or timelines.
+- **Step 2: Chronology Verification** — Mutual request-and-agree protocol unlocks incident dates and behavioral categories to corroborate patterns.
+- **Step 3: Joint Legal Complaint** — Unlocks the formal joint complaint package. Both complainants can download the generated single-page legal PDF or directly dispatch the case to the IC Reviewer with one click.
+
+### 3. Direct IC Complaint Channel
+- Complainants who choose not to wait for a pattern match can escalate their report directly to the Internal Committee from the Dashboard.
+- Files appear in the IC Reviewer portal under a dedicated **Direct Complaints** inbox for prompt administrative review.
+
+### 4. Certified IC Reviewer Portal
+- **Role-Based PIN Terminal**: Secure portal for certified Presiding Officers and IC caseworkers.
+- **Pending Matches Evaluation**: Evaluates high-confidence HMAC pattern clusters with survivor safeguards.
+- **Direct Complaints Queue**: Review individual filings, acknowledge receipts, or dismiss non-actionable items.
+- **Multimedia Evidence Inspection**: Direct in-browser previews for screenshots and inline playback for audio and video exhibits.
+- **Audit Logging**: Non-PII immutable audit logs compliant with Section 16 of the POSH Act and DPDPA 2023.
+
+### 5. Know Your Rights & Multimedia Presentation
+- **POSH Act 2013 Guide**: Clear breakdown of Internal Committee composition, filing timelines (Section 9), interim relief (Section 12), and statutory confidentiality (Section 16).
+- **Expandable Steps Accordion**: 6-step breakdown of filing procedures presented in an accessible dark-maroon accordion.
+- **Synchronized Audio-Visual Presentation**: Features an embedded official audio narration and timed motion graphics detailing survivor rights and evidence integrity under Section 65B of the Indian Evidence Act.
+- **Emergency Helplines**: Quick access to national women helplines (1091 / 181), NCW Harassment Cell, and Cyber Crime portals.
+
+### 6. Single-Page Legal Evidence PDF Export
+- Generates a compact, professional legal complaint addressed to the **Internal Grievance Committee (IGC)**.
+- Formatted without consumer app branding to comply with formal legal submission standards.
+- Includes complainant pseudonyms, respondent details, structured incident chronology (up to 3 concise exhibits), digital exhibits with SHA-256 checksums, and Section 12 interim relief requests.
+
+---
+
+## Project Structure
+
+```
+Aawaz/
+├── client/                          # React + TypeScript + Vite Frontend
+│   ├── public/                      # Static assets and media (aawaz_presentation.mp3)
+│   ├── src/
+│   │   ├── components/              # UI views & components
+│   │   │   ├── Dashboard.tsx        # Vault overview, reports list & direct IC filing
+│   │   │   ├── ReportBuilder.tsx    # 5-step incident form with multimedia support
+│   │   │   ├── MatchesHub.tsx       # Dynamic two-party consent ladder & joint complaint
+│   │   │   ├── PatternRadarVisualizer.tsx # Sonar radar animation for match status
+│   │   │   ├── ReviewerConsole.tsx  # IC portal with matches, direct inbox & audit logs
+│   │   │   ├── RightsExplainer.tsx  # POSH Act legal guide with steps accordion & video
+│   │   │   ├── AuthorityVideoModal.tsx # Synchronized audio-visual presentation modal
+│   │   │   ├── DisguiseOverlay.tsx  # Study Notes cover screen
+│   │   │   └── Navbar.tsx           # App navigation with notification bell & quick exit
+│   │   ├── context/
+│   │   │   └── AppContext.tsx       # State management: vaultStore, direct complaints & matching
+│   │   ├── utils/
+│   │   │   ├── crypto.ts            # Client-side AES-256-GCM & SHA-256 fingerprinting
+│   │   │   ├── hasher.ts            # Keyed HMAC-SHA256 & phonetic normalization
+│   │   │   ├── aiStructuring.ts     # Chronological parsing & category tagging
+│   │   │   ├── pdfGenerator.ts      # jsPDF formal legal complaint generator
+│   │   │   └── translations.ts      # Multilingual text mappings
+│   │   ├── types/
+│   │   │   └── index.ts             # TypeScript definitions (ReportDraft, MatchRecord, DirectComplaint)
+│   │   ├── App.tsx                  # App layout, router & redesigned dark footer
+│   │   └── main.tsx                 # Root entrypoint
+│   ├── package.json
+│   └── vite.config.ts
+│
+└── server/                          # Optional Python / FastAPI backend microservice
+    ├── main.py                      # FastAPI HMAC matching endpoints
+    ├── requirements.txt
+    └── test_matching.py
+```
+
+---
+
+## Tech Stack & Architectural Layers
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              FRONTEND LAYER                                 │
+│  React 18 (SPA)  │  Vite (Bundler)  │  TypeScript (Strict)  │  Tailwind CSS │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                          STATE & MULTI-VAULT STORE                          │
+│  React Context API  │  Multi-User Account Switcher  │  Local Encrypted Data │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                         CRYPTOGRAPHY & FORENSICS                            │
+│  Web Crypto API (Subtle)  │  AES-256-GCM (Payloads)  │  PBKDF2 (Derivation) │
+│  Keyed HMAC-SHA256 (Tokens)  │  SHA-256 Fingerprinting (Section 65B Audits) │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                            MATCHING ENGINE                                  │
+│     Double Metaphone (Phonetic)  │  Soundex Keys  │  Zero-Knowledge Matrix  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                        DOCUMENT & MULTIMEDIA SUITE                          │
+│  jsPDF (1-Page Legal Evidence)  │  Base64 Embedded Images  │  HTML5 Audio   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                          BACKEND MICROSERVICE (OPTIONAL)                    │
+│      FastAPI (Python 3.10+)  │  Uvicorn  │  Server-Side Blind HMAC Index    │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+| Layer | Technologies & Tools | Implementation Purpose |
+|---|---|---|
+| **User Interface & Styling** | React 18, Vite, TypeScript, Tailwind CSS | Single-page application with type-safe components, high-speed HMR, and responsive sanctuary styling (soft blush, glassmorphism, dark maroon legal surfaces). |
+| **Client-Side Cryptography** | Native Web Crypto API (`window.crypto.subtle`) | Zero-knowledge client-side encryption. Generates AES-256-GCM sealed blobs, PBKDF2 derived keys, and blind HMAC-SHA256 match hashes directly on-device without third-party key leaks. |
+| **Phonetic Matching Engine** | Double Metaphone, Soundex Algorithms | Normalizes names and company tokens into sound keys (e.g., `VRN_SHRM`), catching spelling variations, abbreviations, and typos across independent filings. |
+| **Forensic Evidence & Document Export** | jsPDF, HTML5 Canvas, FileReader API | Converts screenshots to embedded base64 graphics, applies SHA-256 integrity checksums (Indian Evidence Act Sec. 65B), and outputs clean, 1-page formal complaints. |
+| **State & Identity Management** | React Context API, Local Multi-Vault System | Manages dynamic peer identities, simultaneous two-sided multi-user test sessions, and stage-by-stage consent handshakes without hardcoded profiles. |
+| **Multimedia & Presentation** | Web Audio API, HTML5 Audio Player | Synchronized audio-visual presentation with embedded voiceover (`/aawaz_presentation.mp3`) and inline playback in the IC Reviewer console. |
+| **Backend Service (Optional)** | Python 3, FastAPI, Uvicorn | Standalone microservice for blind HMAC token indexing and enterprise multi-tenant server deployment. |
 
 ---
 
 ## Getting Started
 
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or pnpm
+
+### Installation
+
 ```bash
-# Navigate to the client directory
+# Clone the repository and enter the client directory
 cd client
 
 # Install dependencies
 npm install
 
-# Start development server
+# Start the development server
 npm run dev
 ```
 
 Open **`http://localhost:3000`** in your browser.
+
+---
+
+## Security & Statutory Disclaimer
+
+Aawaz provides report organization, cryptographic matching, and statutory guidance. It does not replace formal legal counsel. All platform operations adhere to the non-disclosure mandates of **Section 16 of the POSH Act 2013** and data minimization principles under the **Digital Personal Data Protection Act (DPDPA) 2023**.
 
 ---
 

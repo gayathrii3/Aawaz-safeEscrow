@@ -7,36 +7,47 @@ import {
   Lock, 
   Users2, 
   ArrowRight, 
-  Key, 
-  Scale, 
-  CheckCircle2, 
-  Copy, 
-  Check, 
-  Eye, 
-  EyeOff,
+  Key,
+  RotateCcw,
   Sparkles,
   Calendar,
   Layers,
   Trash2,
-  AlertTriangle,
   UserPlus,
-  X
+  X,
+  CheckCircle2,
+  AlertTriangle,
+  Send,
+  Clock,
 } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
-  const { currentUser, allUsers, createNewUser, switchUser, reports, matches, setView, deleteReport, language } = useApp();
+  const { currentUser, allUsers, createNewUser, switchUser, reports, matches, setView, deleteReport, language, directComplaints, submitDirectComplaint } = useApp();
   const t = translations[language];
-  const [showKeyModal, setShowKeyModal] = useState(false);
   const [showUserModal, setShowUserModal] = useState(false);
+  const [showRestoreModal, setShowRestoreModal] = useState(false);
   const [customPseudonym, setCustomPseudonym] = useState('');
-  const [copiedKey, setCopiedKey] = useState(false);
-  const [revealKey, setRevealKey] = useState(false);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  const handleCopyPhrase = () => {
-    navigator.clipboard.writeText(currentUser.recoveryPhrase);
-    setCopiedKey(true);
-    setTimeout(() => setCopiedKey(false), 2000);
+  // Restore vault: user enters their vault pseudonym to switch back to it
+  const [restorePseudonym, setRestorePseudonym] = useState('');
+  const [restoreError, setRestoreError] = useState('');
+  const [restoreSuccess, setRestoreSuccess] = useState(false);
+
+  const handleRestore = () => {
+    const match = allUsers.find(u => u.pseudonym.toLowerCase() === restorePseudonym.trim().toLowerCase());
+    if (!match) {
+      setRestoreError('No vault found with that name in this session. If you cleared your browser data, the vault cannot be recovered.');
+      return;
+    }
+    switchUser(match.id);
+    setRestoreSuccess(true);
+    setTimeout(() => {
+      setShowRestoreModal(false);
+      setRestoreSuccess(false);
+      setRestorePseudonym('');
+      setRestoreError('');
+    }, 1200);
   };
 
   return (
@@ -83,11 +94,10 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Decorative soft glow background circle */}
-        <div className="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-gradient-to-tr from-rose-200/40 to-blush-100/30 blur-2xl pointer-events-none"></div>
+        <div className="absolute -right-16 -bottom-16 w-64 h-64 rounded-full bg-gradient-to-tr from-rose-200/40 to-blush-100/30 blur-2xl pointer-events-none" />
       </div>
 
-      {/* Account Security & Recovery Phrase Strip */}
+      {/* Vault Identity Strip — no recovery phrase, just pseudonym + actions */}
       <div className="glass-card rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 border border-rose-100/80">
         <div className="flex items-center space-x-3">
           <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
@@ -99,17 +109,18 @@ export const Dashboard: React.FC = () => {
               <span className="font-mono text-xs text-rose-700 font-medium">{currentUser.pseudonym}</span>
             </div>
             <p className="text-[11px] text-slate-500">
-              {t.noEmailOrPhone}
+              Your vault ID is your only identity. No email or phone required.
             </p>
           </div>
         </div>
 
         <div className="flex items-center space-x-2">
           <button
-            onClick={() => setShowKeyModal(true)}
-            className="px-4 py-2 rounded-full text-xs font-medium text-slate-700 bg-white hover:bg-rose-50 border border-rose-200/60 shadow-sm transition-colors whitespace-nowrap"
+            onClick={() => setShowRestoreModal(true)}
+            className="px-4 py-2 rounded-full text-xs font-medium text-slate-700 bg-white hover:bg-rose-50 border border-rose-200/60 shadow-sm transition-colors whitespace-nowrap flex items-center space-x-1.5"
           >
-            {t.viewRecoveryPhrase}
+            <RotateCcw className="w-3 h-3 text-rose-500" />
+            <span>Restore Vault</span>
           </button>
 
           <button
@@ -209,13 +220,29 @@ export const Dashboard: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Withdraw Confirmation Dialog */}
+                {/* Direct IC Complaint button */}
+                {(() => {
+                  const filed = directComplaints.find(d => d.reportId === rep.id);
+                  return filed ? (
+                    <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-800">
+                      <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                      <span>Direct complaint filed with IC Reviewer — <span className="font-medium capitalize">{filed.status}</span></span>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => submitDirectComplaint(rep.id)}
+                      className="w-full flex items-center justify-center space-x-2 py-2 rounded-xl border border-rose-300 bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-semibold transition-colors"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>File Direct Complaint to IC Reviewer</span>
+                    </button>
+                  );
+                })()}
+
                 {confirmDeleteId === rep.id && (
                   <div className="mt-3 p-3 rounded-2xl bg-rose-50 border border-rose-200 text-xs space-y-2">
                     <p className="font-semibold text-rose-900">{t.confirmDeleteTitle}</p>
-                    <p className="text-[11px] text-rose-700">
-                      {t.confirmDeleteDesc}
-                    </p>
+                    <p className="text-[11px] text-rose-700">{t.confirmDeleteDesc}</p>
                     <div className="flex items-center justify-end space-x-2 pt-1">
                       <button
                         onClick={() => setConfirmDeleteId(null)}
@@ -224,10 +251,7 @@ export const Dashboard: React.FC = () => {
                         {t.cancel}
                       </button>
                       <button
-                        onClick={() => {
-                          deleteReport(rep.id);
-                          setConfirmDeleteId(null);
-                        }}
+                        onClick={() => { deleteReport(rep.id); setConfirmDeleteId(null); }}
                         className="px-3 py-1 rounded-full bg-rose-600 text-white font-medium text-xs shadow-sm hover:bg-rose-700"
                       >
                         {t.confirmDelete}
@@ -241,56 +265,58 @@ export const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* Recovery Phrase Modal */}
-      {showKeyModal && (
+      {/* Restore Vault Modal */}
+      {showRestoreModal && (
         <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-rose-100 space-y-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-rose-100 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-rose-100">
               <div className="flex items-center space-x-2">
-                <Key className="w-5 h-5 text-rose-600" />
-                <h3 className="font-serif text-lg font-semibold text-slate-800">
-                  Your 12-Word Recovery Vault
-                </h3>
+                <RotateCcw className="w-5 h-5 text-rose-600" />
+                <h3 className="font-serif text-lg font-semibold text-slate-800">Restore Vault</h3>
               </div>
-              <button 
-                onClick={() => setShowKeyModal(false)}
-                className="text-slate-400 hover:text-slate-600 text-xs"
-              >
-                Close
+              <button onClick={() => { setShowRestoreModal(false); setRestoreError(''); setRestorePseudonym(''); }}
+                className="text-slate-400 hover:text-slate-600">
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed">
-              These 12 words derive your master AES-256 decryption key. Keep them in a private place. Aawaz never transmits your recovery phrase to any server.
+              Enter the vault name (pseudonym) you used when you created your account. If other vaults exist in this session, you will be switched to them.
             </p>
 
-            <div className="p-4 rounded-2xl bg-rose-50/70 border border-rose-200/60 relative">
-              <div className="grid grid-cols-3 gap-2">
-                {currentUser.recoveryPhrase.split(' ').map((word, i) => (
-                  <div key={i} className="text-xs bg-white px-2 py-1.5 rounded-lg border border-rose-100 font-mono text-center text-slate-700">
-                    <span className="text-[10px] text-slate-400 mr-1">{i + 1}.</span>
-                    {word}
-                  </div>
-                ))}
-              </div>
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={restorePseudonym}
+                onChange={(e) => { setRestorePseudonym(e.target.value); setRestoreError(''); }}
+                placeholder="e.g. Velvet-Harbor-804"
+                className="w-full px-4 py-2.5 rounded-xl border border-rose-200 bg-rose-50/40 text-xs font-mono text-slate-800 focus:outline-none focus:border-rose-400"
+              />
+              {restoreError && (
+                <p className="text-[11px] text-red-600 flex items-start space-x-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <span>{restoreError}</span>
+                </p>
+              )}
+              {restoreSuccess && (
+                <p className="text-[11px] text-emerald-700 flex items-center space-x-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Vault restored.</span>
+                </p>
+              )}
             </div>
 
-            <div className="flex items-center justify-between pt-2">
-              <button
-                onClick={handleCopyPhrase}
-                className="flex items-center space-x-1.5 px-4 py-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-medium transition-colors"
-              >
-                {copiedKey ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedKey ? 'Copied to Clipboard' : 'Copy Words'}</span>
-              </button>
-
-              <button
-                onClick={() => setShowKeyModal(false)}
-                className="px-5 py-2 rounded-full bg-slate-900 hover:bg-black text-white text-xs font-semibold transition-colors"
-              >
-                I Have Saved Them
-              </button>
+            <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-[11px] text-amber-800 leading-relaxed">
+              If you cleared your browser data or are on a new device, the vault data cannot be recovered — it was only stored locally on your previous device.
             </div>
+
+            <button
+              onClick={handleRestore}
+              disabled={!restorePseudonym.trim()}
+              className="w-full py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 disabled:opacity-40 text-white text-xs font-semibold shadow transition-all"
+            >
+              Restore Vault
+            </button>
           </div>
         </div>
       )}
@@ -305,39 +331,26 @@ export const Dashboard: React.FC = () => {
                   <UserPlus className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-serif text-base font-bold text-slate-900">
-                    Vault Account Manager
-                  </h3>
-                  <p className="text-[11px] text-slate-500">
-                    Create a new user or switch between vaults
-                  </p>
+                  <h3 className="font-serif text-base font-bold text-slate-900">Vault Account Manager</h3>
+                  <p className="text-[11px] text-slate-500">Create a new user or switch between vaults</p>
                 </div>
               </div>
-              <button
-                onClick={() => setShowUserModal(false)}
-                className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100"
-              >
+              <button onClick={() => setShowUserModal(false)} className="p-1 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Current Vault Indicator */}
             <div className="p-3.5 rounded-2xl bg-rose-50/70 border border-rose-200/80 flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-rose-800">Active Vault</span>
                 <p className="font-mono text-xs font-bold text-slate-800 mt-0.5">{currentUser.pseudonym}</p>
                 <p className="text-[10px] text-slate-500">{reports.length} report(s) saved in this vault</p>
               </div>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">
-                Current
-              </span>
+              <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">Current</span>
             </div>
 
-            {/* Create Brand New Vault Form */}
             <div className="space-y-3 pt-1">
-              <label className="text-xs font-semibold text-slate-700 block">
-                Create a Brand New Vault User
-              </label>
+              <label className="text-xs font-semibold text-slate-700 block">Create a Brand New Vault User</label>
               <div className="flex items-center space-x-2">
                 <input
                   type="text"
@@ -358,19 +371,14 @@ export const Dashboard: React.FC = () => {
 
               <button
                 type="button"
-                onClick={() => {
-                  createNewUser(customPseudonym);
-                  setCustomPseudonym('');
-                  setShowUserModal(false);
-                }}
+                onClick={() => { createNewUser(customPseudonym); setCustomPseudonym(''); setShowUserModal(false); }}
                 className="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold shadow transition-all flex items-center justify-center space-x-1.5"
               >
                 <UserPlus className="w-3.5 h-3.5" />
-                <span>Create Fresh Vault & Switch</span>
+                <span>Create Fresh Vault and Switch</span>
               </button>
             </div>
 
-            {/* Switch to Existing Vaults in Session */}
             {allUsers.length > 1 && (
               <div className="space-y-2 pt-2 border-t border-slate-100">
                 <span className="text-xs font-semibold text-slate-700 block">
@@ -391,10 +399,7 @@ export const Dashboard: React.FC = () => {
                         <span className="text-[10px] text-rose-600 font-bold">Active</span>
                       ) : (
                         <button
-                          onClick={() => {
-                            switchUser(u.id);
-                            setShowUserModal(false);
-                          }}
+                          onClick={() => { switchUser(u.id); setShowUserModal(false); }}
                           className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-black text-white text-[10px] font-medium transition-colors"
                         >
                           Switch

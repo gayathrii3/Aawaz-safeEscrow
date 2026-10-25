@@ -38,6 +38,13 @@ venv/
 ENV/
 .pytest_cache/
 
+# Documentation & Notes
+*study_doc*
+*STUDY_DOC*
+*.doc
+*.docx
+docs/
+
 # Editor & OS files
 .vscode/
 .idea/
