@@ -1,15 +1,8 @@
 # Aawaz: Safe Reporting and Evidence Vault
 
-> **Private Harassment Reporting That Links Repeat Offenders**  
-> *"You are heard. You are not alone."*
-
----
-
-## Overview
-
-Workplace sexual harassment is rarely an isolated incident; it is usually an ongoing pattern protected by silence, power asymmetry, and fear of single retaliation. Many survivors hesitate to report out of concern for professional fallout, disbelief, or "he said, she said" dismissals.
-
-**Aawaz** provides a privacy-first sanctuary designed under the **POSH Act 2013** and **DPDPA 2023**:
+>Aawaz is a privacy-first, zero-knowledge reporting platform that shifts the reporting dynamic. Instead of forcing a complainant to step forward alone without >knowing if others have faced the same misconduct, Aawaz allows individuals to record incidents in a local, encrypted digital vault.
+>
+>Aawaz uses blind cryptographic pattern matching to connect multiple independent reports that name the same respondent, without exposing plaintext identities or raw narratives to any central party and provides a privacy-first sanctuary designed under the **POSH Act 2013** and **DPDPA 2023**:
 
 - **Client-Side Zero-Knowledge Encryption**: Reports and uploaded exhibits are encrypted directly in the browser. Unconsented narratives and personal identities never leak.
 - **Dynamic Blind Cryptographic Matching**: Reports are indexed using Keyed HMAC-SHA256 and phonetic normalization (Metaphone/Soundex) to pair independent complaints without exposing plaintext names.
@@ -20,14 +13,13 @@ Workplace sexual harassment is rarely an isolated incident; it is usually an ong
 
 ## Safety & Privacy Architecture
 
-- **Study Notes Disguise**: A discreet cover view masquerading as student notes (*"Computer Science & Data Structures Notes"*) accessible instantly via PIN lock.
 - **Instant Quick Exit**: A persistent escape button in the top navigation bar that immediately masks the screen and switches to Google.
 - **No PII Credentials Required**: No email address, phone number, or login credentials needed. Accounts are generated as anonymous vault IDs (e.g., `Velvet-Harbor-804`).
 - **One-Click Vault Restoration**: Quickly restore or switch between local vault accounts without complex recovery phrases.
 
 ---
 
-## System Workflow Diagram
+## System Workflow
 
 ```mermaid
 flowchart LR
@@ -67,9 +59,9 @@ flowchart LR
 
 ---
 
-## Core Features & Workflow
+## Core Features
 
-### 1. Guided 5-Step Incident Builder
+### 1. Guided Incident Builder
 - **Step 1: Narrative Recording** — Express what happened via text or simulated voice transcription.
 - **Step 2: AI Chronology Structuring** — Converts free-form narratives into structured events with dates, locations, witnesses, and behavior tags.
 - **Step 3: Respondent Indexing** — Enter the accused individual's name and organisation to generate real-time phonetic sound keys and blind HMAC match tokens.
@@ -93,16 +85,6 @@ Information unlocks only when **both individuals mutually consent**:
 - **Multimedia Evidence Inspection**: Direct in-browser previews for screenshots and inline playback for audio and video exhibits.
 - **Audit Logging**: Non-PII immutable audit logs compliant with Section 16 of the POSH Act and DPDPA 2023.
 
-### 5. Know Your Rights & Multimedia Presentation
-- **POSH Act 2013 Guide**: Clear breakdown of Internal Committee composition, filing timelines (Section 9), interim relief (Section 12), and statutory confidentiality (Section 16).
-- **Expandable Steps Accordion**: 6-step breakdown of filing procedures presented in an accessible dark-maroon accordion.
-- **Synchronized Audio-Visual Presentation**: Features an embedded official audio narration and timed motion graphics detailing survivor rights and evidence integrity under Section 65B of the Indian Evidence Act.
-- **Emergency Helplines**: Quick access to national women helplines (1091 / 181), NCW Harassment Cell, and Cyber Crime portals.
-
-### 6. Single-Page Legal Evidence PDF Export
-- Generates a compact, professional legal complaint addressed to the **Internal Grievance Committee (IGC)**.
-- Formatted without consumer app branding to comply with formal legal submission standards.
-- Includes complainant pseudonyms, respondent details, structured incident chronology (up to 3 concise exhibits), digital exhibits with SHA-256 checksums, and Section 12 interim relief requests.
 
 ---
 
@@ -171,16 +153,6 @@ Aawaz/
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-| Layer | Technologies & Tools | Implementation Purpose |
-|---|---|---|
-| **User Interface & Styling** | React 18, Vite, TypeScript, Tailwind CSS | Single-page application with type-safe components, high-speed HMR, and responsive sanctuary styling (soft blush, glassmorphism, dark maroon legal surfaces). |
-| **Client-Side Cryptography** | Native Web Crypto API (`window.crypto.subtle`) | Zero-knowledge client-side encryption. Generates AES-256-GCM sealed blobs, PBKDF2 derived keys, and blind HMAC-SHA256 match hashes directly on-device without third-party key leaks. |
-| **Phonetic Matching Engine** | Double Metaphone, Soundex Algorithms | Normalizes names and company tokens into sound keys (e.g., `VRN_SHRM`), catching spelling variations, abbreviations, and typos across independent filings. |
-| **Forensic Evidence & Document Export** | jsPDF, HTML5 Canvas, FileReader API | Converts screenshots to embedded base64 graphics, applies SHA-256 integrity checksums (Indian Evidence Act Sec. 65B), and outputs clean, 1-page formal complaints. |
-| **State & Identity Management** | React Context API, Local Multi-Vault System | Manages dynamic peer identities, simultaneous two-sided multi-user test sessions, and stage-by-stage consent handshakes without hardcoded profiles. |
-| **Multimedia & Presentation** | Web Audio API, HTML5 Audio Player | Synchronized audio-visual presentation with embedded voiceover (`/aawaz_presentation.mp3`) and inline playback in the IC Reviewer console. |
-| **Backend Service (Optional)** | Python 3, FastAPI, Uvicorn | Standalone microservice for blind HMAC token indexing and enterprise multi-tenant server deployment. |
-
 ---
 
 ## Getting Started
@@ -208,7 +180,7 @@ Open **`http://localhost:3000`** in your browser.
 
 ## Security & Statutory Disclaimer
 
-Aawaz provides report organization, cryptographic matching, and statutory guidance. It does not replace formal legal counsel. All platform operations adhere to the non-disclosure mandates of **Section 16 of the POSH Act 2013** and data minimization principles under the **Digital Personal Data Protection Act (DPDPA) 2023**.
+Aawaz provides report organization, cryptographic matching, and statutory guidance. It does not replace formal legal counsel.
 
 ---
 
