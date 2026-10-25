@@ -165,7 +165,7 @@ Open **`http://localhost:3000`** in your browser.
 
 ## Security & Statutory Disclaimer
 
-Aawaz provides report organization, cryptographic matching, and statutory guidance. It does not replace formal legal counsel. All platform operations adhere to the non-disclosure mandates of **Section 16 of the POSH Act 2013** and data minimization principles under the **Digital Personal Data Protection Act (DPDPA) 2023**.
+Aawaz provides report organization, cryptographic matching, and statutory guidance. It does not replace formal legal counsel.
 
 ---
 
